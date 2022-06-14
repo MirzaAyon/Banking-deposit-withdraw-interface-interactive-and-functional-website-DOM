@@ -39,20 +39,23 @@
             //get user email
             const emailField = document.getElementById('user-email');
             const userEmail = emailField.value;
-            // console.log(userEmail);
-            // inspact e kaj kore
+
 
 
 
             // get user password
             const passwordField = document.getElementById('user-password');
             const userPassword = passwordField.value;
-            // console.log(userPassword)
+            // check email and password
             if (userEmail == 'ayonmirza98@gmail.com' && userPassword == 'secret') {
-                console.log('valid user');
+                // console.log('valid user');
+
+                window.location.href = 'banking.html';
+                //onno page e niye jabe login and user name same hole
             }
         })
     </script>
 </body>
 
 </html>
+<!-- button e korle arekta page e nibe -->
