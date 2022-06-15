@@ -76,7 +76,7 @@
             const newDepositAmountText = depositInput.value;
 
             const newDepositAmount = parseFloat(newDepositAmountText);
-            depositInput.value = '';
+            depositInput.value = ''; //ei kaj ta ekhane hoye jache tai withdraw er ei part ta ekhane dewa lagbe na
             return newDepositAmount;
             //tai eke return er upr uthae dilam
 
@@ -113,14 +113,16 @@
 
         });
 
-        // handle withdraw event handler
+        // handle withdraw event handler and button
         document.getElementById('withdraw-button').addEventListener('click', function () {
 
-            const withdrawInput = document.getElementById('withdraw-input');
-            const withdrawAmountText = withdrawInput.value;
+            // const withdrawInput = document.getElementById('withdraw-input');
+            // const withdrawAmountText = withdrawInput.value;
 
-            const newWithdrawAmount = parseFloat(withdrawAmountText);
-            console.log(newWithdrawAmount);
+            // const newWithdrawAmount = parseFloat(withdrawAmountText);
+            // console.log(newWithdrawAmount);
+
+            const newWithdrawAmount = getInputValue('withdraw-input');
 
             // set withdraw total
             const withdrawTotal = document.getElementById('withdraw-total');
@@ -138,8 +140,7 @@
 
             balanceTotal.innerText = newBalanceTotal;
 
-            // clear withdraw input
-            withdrawInput.value = '';
+
         })
 
     </script>

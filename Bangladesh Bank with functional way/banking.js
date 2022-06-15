@@ -3,6 +3,6 @@ function doubleIt(num) {
     return result;
 }
 
-const first = doubleIt(5);
-const second = doubleIt(7);
+const fiveDouble = doubleIt(5);
+const sevenDouble = doubleIt(7);
 //console kore dekhbo

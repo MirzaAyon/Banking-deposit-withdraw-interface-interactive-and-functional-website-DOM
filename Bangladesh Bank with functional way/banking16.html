@@ -72,18 +72,32 @@
     <script>
 
         function getInputValue(inputId) {
-            const depositInput = document.getElementById(inputId);
-            const newDepositAmountText = depositInput.value;
+            const inputField = document.getElementById(inputId);
+            const inputAmountText = inputField.value;
 
-            const newDepositAmount = parseFloat(newDepositAmountText);
-            depositInput.value = '';
-            return newDepositAmount;
-            //tai eke return er upr uthae dilam
-
-            // clear the deposit input field
-            //karon return er por kono kichu likha jae na code ber hoye jae
+            const amountValue = parseFloat(inputAmountText);
+            inputField.value = '';
+            return amountValue;
 
 
+
+        }
+
+        function updateTotalField(totalFieldId, amount) {
+            // debugger;
+            const totalElement = document.getElementById(totalFieldId);
+            const totalText = totalElement.innerText;
+
+            const previousTotal = parseFloat(totalText);
+            totalElement.innerText = previousTotal + amount;
+        }
+
+        function updateBalance(newDepositAmount) {
+            const balanceTotal = document.getElementById('balance-total');
+            const balanceTotalText = balanceTotal.innerText;
+            const previousBalanceTotal = parseFloat(balanceTotalText);
+            const newBalanceTotal = previousBalanceTotal + newDepositAmount;
+            balanceTotal.innerText = newBalanceTotal;
         }
 
 
@@ -95,51 +109,43 @@
 
             const newDepositAmount = getInputValue('deposit-input'); //call kore dilam
 
-            // update deposit total
-            const depositTotal = document.getElementById('deposit-total');
-            const previousDepositText = depositTotal.innerText;
 
-            const previousDepositAmount = parseFloat(previousDepositText);
-            const newDepositTotal = previousDepositAmount + newDepositAmount;
 
-            depositTotal.innerText = newDepositTotal;
+            updateTotalField('deposit-total', newDepositAmount);
 
             // update account balance 
-            const balanceTotal = document.getElementById('balance-total');
-            const balanceTotalText = balanceTotal.innerText;
-            const previousBalanceTotal = parseFloat(balanceTotalText);
-            const newBalanceTotal = previousBalanceTotal + newDepositAmount;
-            balanceTotal.innerText = newBalanceTotal;
+            // const balanceTotal = document.getElementById('balance-total');
+            // const balanceTotalText = balanceTotal.innerText;
+            // const previousBalanceTotal = parseFloat(balanceTotalText);
+            // const newBalanceTotal = previousBalanceTotal + newDepositAmount;
+            // balanceTotal.innerText = newBalanceTotal;
+
+            updateBalance(newDepositAmount);
 
         });
 
-        // handle withdraw event handler
+        // handle withdraw event handler and button
         document.getElementById('withdraw-button').addEventListener('click', function () {
 
-            const withdrawInput = document.getElementById('withdraw-input');
-            const withdrawAmountText = withdrawInput.value;
 
-            const newWithdrawAmount = parseFloat(withdrawAmountText);
-            console.log(newWithdrawAmount);
 
-            // set withdraw total
-            const withdrawTotal = document.getElementById('withdraw-total');
-            const previousWithdrawText = withdrawTotal.innerText;
-            const previousWithdrawTotal = parseFloat(previousWithdrawText);
+            const newWithdrawAmount = getInputValue('withdraw-input'); //call kore dilam
 
-            const newWithdrawTotal = previousWithdrawTotal + newWithdrawAmount;
-            withdrawTotal.innerText = newWithdrawTotal;
+
+            updateTotalField('withdraw-total', newWithdrawAmount);
 
             // update balance
-            const balanceTotal = document.getElementById('balance-total');
-            const previousBalanceText = balanceTotal.innerText;
-            const previousBalanceTotal = parseFloat(previousBalanceText);
-            const newBalanceTotal = previousBalanceTotal - newWithdrawAmount;
+            // const balanceTotal = document.getElementById('balance-total');
+            // const previousBalanceText =
+            //     balanceTotal.innerText;
+            // const previousBalanceTotal = parseFloat(previousBalanceText);
+            // const newBalanceTotal = previousBalanceTotal - newWithdrawAmount;
 
-            balanceTotal.innerText = newBalanceTotal;
+            // balanceTotal.innerText = newBalanceTotal;
 
-            // clear withdraw input
-            withdrawInput.value = '';
+            updateBalance(newWithdrawAmount);
+
+
         })
 
     </script>
