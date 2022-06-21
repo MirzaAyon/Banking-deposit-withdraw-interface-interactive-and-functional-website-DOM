@@ -8,13 +8,15 @@
     <title>Bank Website</title>
     <!-- css link-->
     <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 
 <body>
 
     <header>
         <h1 class="text-5xl text-center mt-8 text-red-600">Transaction <span class="font-semibold text-green-600">
-                Details</span></h1>
+                Details </span>
+        </h1>
     </header>
     <main class="w-3/4 mx-auto">
         <!-- balance and transaction-->
@@ -26,11 +28,13 @@
                 </div>
                 <div class="bg-green-300 p-8 rounded">
                     <h3 class="text-2xl">Withdraw</h3>
-                    <h4 class="text-4xl">$00</h4>
+                    <h4 class="text-4xl">$<span id="withdraw-total">
+                            00
+                        </span> </h4>
                 </div>
                 <div class="bg-red-300 p-8 rounded">
                     <h3 class="text-2xl">Balance</h3>
-                    <h4 class="text-4xl">$1000</h4>
+                    <h4 class="text-4xl">$<span id="balance-total">1000</span> </h4>
                 </div>
 
             </div>
@@ -67,58 +71,94 @@
         </section>
     </main>
 
-
     <script>
-        function getInputValue(fieldId) {
-            const inputField = document.getElementById(fieldId);
-            const valueInText = inputField.value;
-            const value = parseFloat(valueInText);
+
+        function getInputValue(inputId) {
+            // debugger;
+            const inputField = document.getElementById(inputId);
+            const inputAmountText = inputField.value;
+
+            const amountValue = parseFloat(inputAmountText);
             inputField.value = '';
-            return value;
+            return amountValue;
+
+
+
         }
-        function getInnerTextValue(fieldId) {
-            const fieldTag = document.getElementById(fieldId);
-            const fieldValueInText = fieldTag.innerText;
-            const value = parseFloat(fieldValueInText);
-            return value;
+
+        function updateTotalField(totalFieldId, amount) {
+            // debugger;
+            const totalElement = document.getElementById(totalFieldId);
+            const totalText = totalElement.innerText;
+
+            const previousTotal = parseFloat(totalText);
+            totalElement.innerText = previousTotal + amount;
         }
-        function updateTotal(fieldId, amount) {
-            const previousTotal = getInnerTextValue(fieldId);
-            const newTotal = previousTotal + amount;
-            document.getElementById(fieldId).innerText = newTotal;
-            return newTotal;
+        function getCurrentBalance() {
+            const balanceTotal = document.getElementById('balance-total');
+            const balanceTotalText = balanceTotal.innerText;
+            const previousBalanceTotal = parseFloat(balanceTotalText);
+            return previousBalanceTotal;
         }
-        function updateBalance(amount, isAdding) {
-            const previousBalance = getInnerTextValue('balance-total');
-            let newBalance;
-            if (isAdding == true) {
-                newBalance = previousBalance + amount;
+        function updateBalance(newDepositAmount, isAdd) {
+            const balanceTotal = document.getElementById('balance-total');
+            // const balanceTotalText = balanceTotal.innerText;
+            // const previousBalanceTotal = parseFloat(balanceTotalText); 
+
+            const previousBalanceTotal = getCurrentBalance();
+
+            if (isAdd == true) {
+                const newBalanceTotal = previousBalanceTotal + newDepositAmount;
+                balanceTotal.innerText = newBalanceTotal;
             }
             else {
-                newBalance = previousBalance - amount;
+                const newBalanceTotal = previousBalanceTotal - newDepositAmount;
+                balanceTotal.innerText = newBalanceTotal;
             }
-            document.getElementById('balance-total').innerText = newBalance;
         }
+
+
+
+
+        // handle deposit button event
         document.getElementById('deposit-button').addEventListener('click', function () {
-            const amount = getInputValue('deposit-input');
-            if (amount > 0) {
-                updateTotal('deposit-total', amount);
-                updateBalance(amount, true);
+
+
+            const newDepositAmount = getInputValue('deposit-input'); //call kore dilam
+
+
+
+            if (newDepositAmount > 0) {
+                updateTotalField('deposit-total', newDepositAmount);
+                updateBalance(newDepositAmount, true);
             }
+
         });
 
-        // handle withdraw
+        // handle withdraw event handler and button
         document.getElementById('withdraw-button').addEventListener('click', function () {
-            const amount = getInputValue('withdraw-input');
-            const balance = getInnerTextValue('balance-total');
-            if (amount > 0 && amount <= balance) {
-                updateTotal('withdraw-total', amount);
-                updateBalance(amount, false)
+
+
+
+            const newWithdrawAmount = getInputValue('withdraw-input'); //call kore dilam
+            const currentBalance = getCurrentBalance();
+
+            if (newWithdrawAmount > 0 && newWithdrawAmount < currentBalance) {
+                updateTotalField('withdraw-total', newWithdrawAmount);
+                updateBalance(newWithdrawAmount, false);
             }
+            if (newWithdrawAmount > currentBalance) {
+                console.log('You can not withdraw amount'); //apatoto inspact e thakbe
+            }
+
+
+
+
+
+
         })
 
     </script>
-
 </body>
 
 </html>
